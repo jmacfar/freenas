@@ -347,6 +347,8 @@ class Job(object):
             queue.release_lock(self)
             self._finished.set()
             if self.options['transient']:
+                if self.state == State.FAILED:
+                    logger.error("Transient job failed: %r", self.__encode__())
                 queue.remove(self.id)
             else:
                 self.middleware.send_event('core.get_jobs', 'CHANGED', id=self.id, fields=self.__encode__())
