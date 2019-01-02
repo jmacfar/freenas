@@ -37,7 +37,7 @@ class SNMPService(SystemServiceService):
         if not new['v3'] and not new['community']:
             verrors.add('snmp_update.community', 'This field is required when SNMPv3 is disabled')
 
-        if new['v3_authtype'] and not new['v3_password']:
+        if new['v3'] and new['v3_authtype'] and not new['v3_password']:
             verrors.add(
                 'snmp_update.v3_password',
                 'This field is requires when SNMPv3 auth type is specified',
